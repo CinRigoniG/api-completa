@@ -44,6 +44,16 @@ public class MiPrimeraApiApplication {
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private PromocionRepository promocionRepository;
+	@Autowired
+	private UnidadMedidaRepository unidadMedidaRepository;
+	@Autowired
+	private ArticuloInsumoRepository articuloInsumoRepository;
+	@Autowired
+	private ArticuloManufacturadoRepository articuloManufacturadoRepository;
+	@Autowired
+	private ArticuloManufacturadoDetalleRepository articuloManufacturadoDetalleRepository;
+	@Autowired
+	private PromocionDetalleRepository promocionDetalleRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MiPrimeraApiApplication.class, args);
@@ -65,7 +75,12 @@ public class MiPrimeraApiApplication {
 						   PedidoRepository pedidoRepository,
 						   DetallePedidoRepository detallePedidoRepository,
 						   CategoriaRepository categoriaRepository,
-						   PromocionRepository promocionRepository){
+						   PromocionRepository promocionRepository,
+						   UnidadMedidaRepository unidadMedidaRepository,
+						   ArticuloInsumoRepository articuloInsumoRepository,
+						   ArticuloManufacturadoRepository articuloManufacturadoRepository,
+						   ArticuloManufacturadoDetalleRepository articuloManufacturadoDetalleRepository,
+						   PromocionDetalleRepository promocionDetalleRepository){
 		return args -> {
 
 			Pais pais1 = Pais.builder()
@@ -211,7 +226,7 @@ public class MiPrimeraApiApplication {
 			categoriaRepository.save(cat1);
 
 			suc1.getCategorias().add(cat1);
-			sucursalRepository.save(suc1);
+			//sucursalRepository.save(suc1);
 
 			Imagen imgProm1 = Imagen.builder()
 					.denominacion("Imangen promo 1")
@@ -250,6 +265,43 @@ public class MiPrimeraApiApplication {
 			suc1.getPromociones().add(prom1);
 			suc1.getPromociones().add(prom2);
 			sucursalRepository.save(suc1);
+
+			UnidadMedida unMedida = UnidadMedida.builder()
+					.denominacion("Unidad de medida 1")
+					.build();
+			unidadMedidaRepository.save(unMedida);
+
+			ArticuloInsumo artInsumo1 = ArticuloInsumo.builder()
+					.denominacion("Articulo insumo 1")
+					.precioVenta(230.0)
+					.precioCompra(460.5)
+					.stockActual(36)
+					.stockMaximo(150)
+					.esParaElaborar(Boolean.TRUE)
+					.categoria(cat1)
+					.unidadMedida(unMedida)
+					.build();
+			artInsumo1.getImagenesArticulos().add(img1);
+			articuloInsumoRepository.save(artInsumo1);
+
+			ArticuloManufacturado artManuf1 = ArticuloManufacturado.builder()
+					.denominacion("Articulo Manufacturado 1")
+					.categoria(cat1)
+					.precioVenta(140.5)
+					.descripcion("Descripcion art manuf 1")
+					.tiempoEstimadoMinutos(60)
+					.preparacion("Preparacion art manuf 1")
+					.unidadMedida(unMedida)
+					.build();
+			artManuf1.getImagenesArticulos().add(img2);
+			articuloManufacturadoRepository.save(artManuf1);
+
+			ArticuloManufacturadoDetalle artManufDet1 = ArticuloManufacturadoDetalle.builder()
+					.cantidad(2)
+					.articuloInsumo(artInsumo1)
+					.articuloManufacturado(artManuf1)
+					.build();
+			articuloManufacturadoDetalleRepository.save(artManufDet1);
 
 		};
 	}

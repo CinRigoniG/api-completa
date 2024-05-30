@@ -21,4 +21,8 @@ public class DetallePedido extends Base{
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
+    @ManyToOne
+    @JoinColumn(name = "articulo_id")
+    private Articulo articulo;
+
 }
