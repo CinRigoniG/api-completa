@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,25 +21,30 @@ public class CategoriaService extends BaseService<Categoria, Long> {
 
     @Transactional
     public Categoria agregarSubcategoria(Long idCategoriaPadre, Categoria nuevaSubcategoria) throws Exception {
-        try {
+        try{
             // Obtener la categoría existente
-            Categoria categoriaPadre = categoriaRepository.findById(idCategoriaPadre).orElseThrow(() -> new Exception("La categoría padre no se encontró"));
+            Categoria categoriaPadre = categoriaRepository.findById(idCategoriaPadre).orElse(null);
+            if (categoriaPadre != null) {
+                // Establecer la categoría existente como padre de la nueva subcategoría
+                nuevaSubcategoria.setCategoriaPadre(categoriaPadre);
+                //Creo la subCategoria como una nueva Categoria
+                categoriaRepository.save(nuevaSubcategoria);
+                return nuevaSubcategoria;
+            } else {
+                // Manejar el caso en el que la categoría existente no se encuentre
+                return null;
+            }
+        }catch (Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
 
-            // Establecer la categoría existente como padre de la nueva subcategoría
-            nuevaSubcategoria.setCategoriaPadre(categoriaPadre);
-
-            // Guardar la nueva subcategoría
-            categoriaRepository.save(nuevaSubcategoria);
-
-            // Agregar la nueva subcategoría a la lista de subcategorías de la categoría existente
-            categoriaPadre.getSubcategorias().add(nuevaSubcategoria);
-            // Guardar la categoría existente con la nueva subcategoría
-            categoriaRepository.save(categoriaPadre);
-
-            return categoriaPadre;
-        } catch (Exception e) {
-            // Manejar cualquier excepción capturada
-            throw new Exception(e.getMessage());
+    @Transactional
+    public List<Categoria> listarPorCategoriaPadre(Long idCategoriaPadre) throws Exception {
+        try {
+            return categoriaRepository.findAllByCategoriaPadre_Id(idCategoriaPadre);
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
         }
     }
 

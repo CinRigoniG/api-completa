@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Articulo extends Base{
+public abstract class Articulo extends Base{
 
     protected String denominacion;
     @Column(name = "precio_venta")
@@ -22,14 +22,14 @@ public class Articulo extends Base{
 
     @OneToMany
     @Builder.Default
-    private Set<Imagen> imagenesArticulos = new HashSet<>();
+    protected Set<Imagen> imagenesArticulos = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    protected Categoria categoria;
 
     @ManyToOne
     @JoinColumn(name = "unidad_medida_id")
-    private UnidadMedida unidadMedida;
+    protected UnidadMedida unidadMedida;
 
 }
