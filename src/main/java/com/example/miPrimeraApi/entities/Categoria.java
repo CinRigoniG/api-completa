@@ -1,5 +1,6 @@
 package com.example.miPrimeraApi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class Categoria extends Base{
 
     @ManyToOne
     @JoinColumn(name = "categoria_padre_id")
+    @JsonIgnore //Impide que se genere un bucle en la llamada GET
     private Categoria categoriaPadre;
 
 }

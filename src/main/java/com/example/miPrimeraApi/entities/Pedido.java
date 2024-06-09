@@ -23,7 +23,7 @@ public class Pedido extends Base{
     @Column(name = "hora_estimada_finalizacion")
     private LocalTime horaEstimadaFinalizacion;
     @Column(name = "total")
-    private Double total;
+    private Double total = 0.0;
     @Column(name = "total_costo")
     private Double totalCosto;
     @Column(name = "estado")
