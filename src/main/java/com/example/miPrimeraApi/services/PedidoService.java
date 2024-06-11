@@ -44,6 +44,17 @@ public class PedidoService extends BaseService<Pedido, Long>{
 
     @Override
     @Transactional
+    public Pedido crear(Pedido pedido) throws Exception {
+        try{
+            calcularTotal(pedido);
+            return pedidoRepository.save(pedido);
+        }catch (Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
     public Pedido actualizar(Pedido pedido) throws Exception {
         try{
             calcularTotal(pedido);

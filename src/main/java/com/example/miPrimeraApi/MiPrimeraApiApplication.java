@@ -54,6 +54,8 @@ public class MiPrimeraApiApplication {
 	private ArticuloManufacturadoDetalleRepository articuloManufacturadoDetalleRepository;
 	@Autowired
 	private PromocionDetalleRepository promocionDetalleRepository;
+	@Autowired
+	private FacturaRepository facturaRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MiPrimeraApiApplication.class, args);
@@ -80,7 +82,8 @@ public class MiPrimeraApiApplication {
 						   ArticuloInsumoRepository articuloInsumoRepository,
 						   ArticuloManufacturadoRepository articuloManufacturadoRepository,
 						   ArticuloManufacturadoDetalleRepository articuloManufacturadoDetalleRepository,
-						   PromocionDetalleRepository promocionDetalleRepository){
+						   PromocionDetalleRepository promocionDetalleRepository,
+						   FacturaRepository facturaRepository){
 		return args -> {
 
 			Pais pais1 = Pais.builder()
@@ -180,8 +183,10 @@ public class MiPrimeraApiApplication {
 
 			Pedido ped1 = Pedido.builder()
 					.fechaPedido(LocalDate.of(2023,05,23))
-					.sucursal(suc1).cliente(cli1)
-					.empleado(em1).total(250.5)
+					.sucursal(suc1)
+					.cliente(cli1)
+					.empleado(em1)
+					.total(0.0)
 					.estado(Estado.PENDIENTE)
 					.formaPago(FormaPago.EFECTIVO)
 					.horaEstimadaFinalizacion(LocalTime.of(12,55))
@@ -302,6 +307,21 @@ public class MiPrimeraApiApplication {
 					.articuloManufacturado(artManuf1)
 					.build();
 			articuloManufacturadoDetalleRepository.save(artManufDet1);
+
+			PromocionDetalle promDetalle1 = PromocionDetalle.builder()
+					.cantidad(2)
+					.articulo(artManuf1)
+					.promocion(prom1)
+					.build();
+			promocionDetalleRepository.save(promDetalle1);
+
+			Factura factura1 = Factura.builder()
+					.pedido(ped1)
+					.formaPago(FormaPago.EFECTIVO)
+					.fechaFacturacion(LocalDate.of(2024,06,10))
+					.totalVenta(ped1.getTotal())
+					.build();
+			facturaRepository.save(factura1);
 
 		};
 	}
