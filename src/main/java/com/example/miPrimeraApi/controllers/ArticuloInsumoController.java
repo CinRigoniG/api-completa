@@ -3,6 +3,7 @@ package com.example.miPrimeraApi.controllers;
 import com.example.miPrimeraApi.entities.ArticuloInsumo;
 import com.example.miPrimeraApi.services.ArticuloInsumoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,9 @@ public class ArticuloInsumoController extends BaseController<ArticuloInsumo, Lon
     }
 
     @GetMapping("/categoria/{cat_id}")
-    public List<ArticuloInsumo> listarPorCategoria(@PathVariable Long cat_id) throws Exception {
-        return articuloInsumoService.listarPorCategoria(cat_id);
+    public ResponseEntity<List<ArticuloInsumo>> listarPorCategoria(@PathVariable Long cat_id) throws Exception {
+        List<ArticuloInsumo> articulos = articuloInsumoService.listarPorCategoria(cat_id);
+        return ResponseEntity.ok(articulos);
     }
 
 }

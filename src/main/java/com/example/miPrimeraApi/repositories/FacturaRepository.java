@@ -5,4 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FacturaRepository extends BaseRepository<Factura, Long> {
+
+    Factura findByPedidoId(Long idPedido);
+
 }

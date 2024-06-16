@@ -64,4 +64,31 @@ public class PedidoService extends BaseService<Pedido, Long>{
         }
     }
 
+    @Transactional
+    public List<Pedido> listarPorCliente(Long idCliente) throws Exception {
+        try{
+            return pedidoRepository.findAllByClienteId(idCliente);
+        }catch (Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    @Transactional
+    public List<Pedido> listarPorEmpleado(Long idEmpleado) throws Exception {
+        try{
+            return pedidoRepository.findAllByEmpleadoId(idEmpleado);
+        }catch (Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    @Transactional
+    public List<Pedido> listarPorSucursal(Long idSucursal) throws Exception {
+        try{
+            return pedidoRepository.findAllBySucursalId(idSucursal);
+        }catch (Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+
 }
