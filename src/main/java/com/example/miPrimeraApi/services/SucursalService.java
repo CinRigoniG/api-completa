@@ -1,6 +1,7 @@
 package com.example.miPrimeraApi.services;
 
 import com.example.miPrimeraApi.entities.Categoria;
+import com.example.miPrimeraApi.entities.Promocion;
 import com.example.miPrimeraApi.entities.Sucursal;
 import com.example.miPrimeraApi.repositories.SucursalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,16 @@ public class SucursalService extends BaseService<Sucursal, Long> {
         try{
             Sucursal sucursal = sucursalRepository.findById(sucursalId).orElse(null);
             return new ArrayList<>(sucursal.getCategorias());
+        }catch (Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    @Transactional
+    public List<Promocion> listarPromocionPorSucursal(Long promocionId) throws Exception {
+        try{
+            Sucursal sucursal = sucursalRepository.findById(promocionId).orElse(null);
+            return new ArrayList<>(sucursal.getPromociones());
         }catch (Exception ex){
             throw new Exception(ex.getMessage());
         }

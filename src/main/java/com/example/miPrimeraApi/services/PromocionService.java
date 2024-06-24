@@ -18,13 +18,4 @@ public class PromocionService extends BaseService<Promocion, Long> {
         super(promocionRepository);
     }
 
-    @Transactional
-    public List<Promocion> listarPorSucursal(Long idSucursal) throws Exception {
-        try{
-            return promocionRepository.findAllBySucursalId(idSucursal);
-        }catch (Exception ex){
-            throw new Exception(ex.getMessage());
-        }
-    }
-
 }

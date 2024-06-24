@@ -1,6 +1,7 @@
 package com.example.miPrimeraApi.controllers;
 
 import com.example.miPrimeraApi.entities.Categoria;
+import com.example.miPrimeraApi.entities.Promocion;
 import com.example.miPrimeraApi.entities.Sucursal;
 import com.example.miPrimeraApi.services.SucursalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class SucursalController extends BaseController<Sucursal, Long> {
     public ResponseEntity<List<Categoria>> listarCategoriaPorSucursal(@PathVariable Long id) throws Exception {
         List<Categoria> categorias = sucursalService.listarCategoriaPorSucursal(id);
         return ResponseEntity.ok(categorias);
+    }
+
+    @GetMapping("/promociones/{id}")
+    public ResponseEntity<List<Promocion>> listarPromocionPorSucursal(@PathVariable Long id) throws Exception {
+        List<Promocion> promociones = sucursalService.listarPromocionPorSucursal(id);
+        return ResponseEntity.ok(promociones);
     }
 
     @GetMapping("/empresa/{id}")

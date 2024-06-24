@@ -22,10 +22,4 @@ public class PromocionController extends BaseController<Promocion, Long> {
         super(promocionService);
     }
 
-    @GetMapping("/sucursal/{id}")
-    public ResponseEntity<List<Promocion>> listarPorSucursal(@PathVariable Long id) throws Exception {
-        List<Promocion> promociones = promocionService.listarPorSucursal(id);
-        return ResponseEntity.ok(promociones);
-    }
-
 }
